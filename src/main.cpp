@@ -24,9 +24,12 @@ void setup() {
 void demoVibration() {
     XboxSeriesXHIDReportBuilder_asukiaaa::ReportBase repo;
     repo.v.select.center = true;
-    repo.v.power.center = 80;  // 60% power
+    repo.v.select.left = false;
+    repo.v.select.right = false;
+    repo.v.select.shake = false;
+    repo.v.power.center = 80;  // 80% power
     repo.v.timeActive = 35;    // 0.35 second
-    Serial.println("\\nController Connected Successfully");
+    Serial.println("\nController Connected Successfully");
     xboxController.writeHIDReport(repo);
 }
 
@@ -63,11 +66,11 @@ void loop() {
             
             Serial.print("trigRT value: ");
             Serial.print((float)xboxController.xboxNotif.trigRT);
-            Serial.print("\\ttrigLT value: ");
+            Serial.print("\ttrigLT value: ");
             Serial.print((float)xboxController.xboxNotif.trigLT);
-            Serial.print("\\tjoyLHori rate: ");
+            Serial.print("\tjoyLHori rate: ");
             Serial.print(joyLHoriValue);
-            Serial.print("\\tsteering angle: ");
+            Serial.print("\t\tsteering angle: ");
             Serial.println(steeringAngle);
         }
     } else {
@@ -76,4 +79,4 @@ void loop() {
             ESP.restart();
         }
     }
-}
+} 
