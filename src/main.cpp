@@ -77,12 +77,12 @@ void loop() {
             Serial.println(steeringAngle);
         }
     } else {
-        Serial.println("not connected");
         if (xboxController.getCountFailedConnection() > 2) {
             ESP.restart();
         }
         if (flag >= 1){
             digitalWrite(LED_BUILTIN, LOW);
+            Serial.println("not connected");
             flag = 0;
         }
     }
