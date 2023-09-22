@@ -6,6 +6,7 @@ XboxSeriesXControllerESP32_asukiaaa::Core xboxController;
 Servo K969Servo;
 
 const int servoPin = 18;
+const int LED_BUILTIN_PIN = 2;
 const float MAX_STEERING_ANGLE = 160.0;
 const float MIN_STEERING_ANGLE = 20.0;
 const float CENTER_STEERING_ANGLE = 90.0;
@@ -17,6 +18,7 @@ void setup() {
     Serial.begin(115200);
     Serial.println("Starting NimBLE Client");
     xboxController.begin();
+    pinMode(LED_BUILTIN_PIN, OUTPUT);
     K969Servo.attach(servoPin);
     K969Servo.write(CENTER_STEERING_ANGLE);
 }
@@ -55,6 +57,7 @@ void loop() {
         } else {
             if (flag == 0) {
                 demoVibration();
+                digitalWrite(LED_BUILTIN, HIGH);
                 Serial.println("Address: " + xboxController.buildDeviceAddressStr());
                 Serial.println("battery " + String(xboxController.battery) + "%");
                 flag += 1;
@@ -77,6 +80,10 @@ void loop() {
         Serial.println("not connected");
         if (xboxController.getCountFailedConnection() > 2) {
             ESP.restart();
+        }
+        if (flag >= 1){
+            digitalWrite(LED_BUILTIN, LOW);
+            flag = 0;
         }
     }
 } 
